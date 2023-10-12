@@ -1,60 +1,61 @@
-import { Button, Col, Row, Space, Typography } from "antd";
-import Modal from "antd/es/modal/Modal";
+import { useCallback, useEffect, useState } from "react";
+import { Button } from "antd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { subsType } from "../subscribers/getSubs";
-import { API_KEY } from "../../constants";
+
+import { TopicType } from "./showTopics";
 
 type AddSubToTopicProps = {
   topicKey: string;
 };
 
 export const AddSubscriber = ({ topicKey }: AddSubToTopicProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [listSubscriber, setListSubscriber] = useState<subsType[]>([]);
+  const [isFollow, setIsFollow] = useState(false);
+  const currentSubscriberId = sessionStorage.getItem("Subscriber_ID");
 
-  const fetchDataSub = async () => {
+  const handle = useCallback(async () => {
     try {
-      const response = await axios.get(`https://api.novu.co/v1/subscribers`, {
-        headers: {
-          Authorization: "ApiKey 0b35f0a6034708d564663cfe8d35b08f",
-        },
-      });
-      const datas = response.data;
-      setListSubscriber(datas.data);
+      const response = await axios.get<TopicType>(
+        `http://localhost:3001/topics/${topicKey}`
+      );
+      const topic: TopicType = response.data;
+      const subs: [] = topic.subscribers;
+      for (const elm of subs) {
+        if (currentSubscriberId === elm) setIsFollow(true);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
-  const handleAddSubscriber = async (subscriberId: string) => {
+  }, [currentSubscriberId, topicKey]);
+
+  async function handleAddSubscriber() {
     try {
       const options = {
         method: "POST",
-        url: `https://api.novu.co/v1/topics/${topicKey}/subscribers`,
-        headers: {
-          Authorization: API_KEY,
-          "Content-Type": "application/json",
-        },
+        url: `http://localhost:3001/topics/add/${topicKey}`,
         data: {
-          subscribers: [subscriberId],
+          subscribers: currentSubscriberId,
         },
       };
-
+      setIsFollow(true);
       await axios(options);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }
   useEffect(() => {
-    fetchDataSub();
-  }, []);
+    handle();
+  }, [handle]);
 
   return (
     <>
-      <Button type="primary" onClick={() => setIsModalOpen(true)}>
-        Add subscriber
+      <Button
+        style={{ width: 120, backgroundColor: "#d4f0fc", border: "none" }}
+        onClick={handleAddSubscriber}
+      >
+        {isFollow ? "FOLLOWING" : "FOLLOW"}
       </Button>
-      <Modal
+
+      {/* <Modal
         open={isModalOpen}
         onOk={() => setIsModalOpen(false)}
         onCancel={() => setIsModalOpen(false)}
@@ -76,7 +77,7 @@ export const AddSubscriber = ({ topicKey }: AddSubToTopicProps) => {
             </Row>
           ))}
         </Space>
-      </Modal>
+      </Modal> */}
     </>
   );
 };

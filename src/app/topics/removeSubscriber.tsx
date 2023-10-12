@@ -34,15 +34,10 @@ export const RemoveSubscriber = ({ topicKey }: RemoveSubToTopicProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = `https://api.novu.co/v1/topics/${topicKey}`;
-        const headers = {
-          Authorization: API_KEY,
-        };
-
-        const response = await axios.get(url, { headers });
-        const data = response.data;
-        setDataTopic(data.data);
-        console.log(data.data);
+        const response = await axios.get(`http://localhost:3001/subscribers`);
+        // const data = response.data;
+        // setDataTopic(data.data);
+        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -78,7 +73,7 @@ export const RemoveSubscriber = ({ topicKey }: RemoveSubToTopicProps) => {
   return (
     <>
       <Button danger onClick={() => setIsModalOpen(true)}>
-        Remove Subscriber
+        Remove subs
       </Button>
       <Modal
         open={isModalOpen}

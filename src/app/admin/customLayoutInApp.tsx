@@ -1,8 +1,10 @@
+import { DeleteOutlined } from "@ant-design/icons";
 import {
   useNotifications,
   useRemoveNotification,
 } from "@novu/notification-center";
 import { Button, Space, Typography } from "antd";
+import Card from "antd/es/card/Card";
 
 export const UseNotifications = () => {
   const { notifications, isFetching, isLoading } = useNotifications();
@@ -21,18 +23,19 @@ export const UseNotifications = () => {
       {!isFetching &&
         notifications?.map((item: any, index) => {
           return (
-            <Space>
-              <Typography.Text>
-                {index + 1} {item?.content}
-              </Typography.Text>
-              <Button
-                type="primary"
-                danger
-                onClick={() => handleRemoveMessage(item?._id)}
-              >
-                Delete
-              </Button>
-            </Space>
+            <Card bodyStyle={{ padding: 0, marginLeft: 8, marginBottom: 4 }}>
+              <Space>
+                <Typography.Text>
+                  {index + 1} {item?.content}
+                </Typography.Text>
+                <Button
+                  style={{ border: "none" }}
+                  onClick={() => handleRemoveMessage(item?._id)}
+                >
+                  <DeleteOutlined />
+                </Button>
+              </Space>
+            </Card>
           );
         })}
     </>

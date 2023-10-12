@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { App } from "./app";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { MetaMaskProvider } from "@metamask/sdk-react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -10,7 +11,21 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <MetaMaskProvider
+        debug={false}
+        sdkOptions={{
+          logging: {
+            developerMode: false,
+          },
+          checkInstallationImmediately: false, // This will automatically connect to MetaMask on page load
+          dappMetadata: {
+            name: "Demo React App",
+            url: window.location.host,
+          },
+        }}
+      >
+        <App />
+      </MetaMaskProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

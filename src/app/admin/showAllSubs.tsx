@@ -5,9 +5,12 @@ import {
   NovuProvider,
   PopoverNotificationCenter,
 } from "@novu/notification-center";
-import { Button, Col, Row, Space, Table, Typography } from "antd";
+import { Button, Card, Col, Empty, Row, Space, Table, Typography } from "antd";
 import Column from "antd/es/table/Column";
+
 import { UseNotifications } from "./customLayoutInApp";
+import { APPLICATION_ID } from "../../constants";
+import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 
 export interface subsType {
   channels: [
@@ -46,14 +49,10 @@ const ShowAllSubscribers = () => {
   const handleShow = async (subscriberId: string) => {
     try {
       const response = await axios.get<subsType[]>(
-        `https://api.novu.co/v1/subscribers/${subscriberId}`,
-        {
-          headers: {
-            Authorization: "ApiKey 0b35f0a6034708d564663cfe8d35b08f",
-          },
-        }
+        `http://localhost:3001/subscribers/${subscriberId}`
       );
-      setDataSub(response.data);
+      const data = response.data;
+      setDataSub(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -71,27 +70,28 @@ const ShowAllSubscribers = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`https://api.novu.co/v1/subscribers`, {
-        headers: {
-          Authorization: "ApiKey 0b35f0a6034708d564663cfe8d35b08f",
-        },
-      });
-      const datas = response.data;
-      setDataSubs(datas.data);
+      const response = await axios.get(`http://localhost:3001/subscribers`);
+      setDataSubs(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   useEffect(() => {
     fetchData();
-  }, [dataSubs]);
+    console.log(dataSub);
+  }, [dataSub]);
 
   return (
     <Row gutter={[8, 8]}>
       <Col span={12}>
-        <Space direction="vertical">
-          <Typography.Title level={2}>Subscribers</Typography.Title>
-          <Table dataSource={dataSubs}>
+        <Card>
+          <Typography.Title
+            style={{ textAlign: "center", marginTop: 0 }}
+            level={2}
+          >
+            Subscribers
+          </Typography.Title>
+          <Table style={{ width: "100%" }} dataSource={dataSubs}>
             <Column
               title="Subscriber"
               key="subscriberId"
@@ -102,68 +102,77 @@ const ShowAllSubscribers = () => {
               render={(_: any, record: subsType) => (
                 <Space key={record._id}>
                   <Button
-                    type="primary"
+                    style={{ border: "none" }}
                     onClick={() => handleShow(record.subscriberId)}
                   >
-                    Show
+                    <EyeOutlined />
                   </Button>
                   <Button
-                    type="primary"
-                    danger
+                    style={{ border: "none" }}
                     onClick={() => {
                       handleDelete(record.subscriberId);
                     }}
                   >
-                    Delete
+                    <DeleteOutlined />
                   </Button>
                 </Space>
               )}
             />
           </Table>
-        </Space>
+        </Card>
       </Col>
-      {dataSub && (
+      {dataSub ? (
         <Col span={12}>
-          <Typography.Title level={2}>Subscriber</Typography.Title>
-          {Object.values(dataSub).map((data) => (
-            <Space.Compact key={data._id} direction="vertical">
-              <NovuProvider
-                subscriberId={data.subscriberId}
-                applicationIdentifier={"j4EdzFA6NpYc"}
-                //   styles={styles}
-                initialFetchingStrategy={{
-                  fetchNotifications: true,
-                  fetchUserPreferences: true,
-                }}
-              >
-                <PopoverNotificationCenter colorScheme={"light"}>
-                  {({ unseenCount }) => (
-                    <NotificationBell unseenCount={unseenCount} />
-                  )}
-                </PopoverNotificationCenter>
-              </NovuProvider>
-              <Typography.Text>
-                Subscriber ID: {data.subscriberId}
-              </Typography.Text>
-              <Typography.Text>First Name: {data.firstName}</Typography.Text>
-              <Typography.Text>Last Name: {data.lastName}</Typography.Text>
-              <Typography.Text>Email: {data.email}</Typography.Text>
-              <Typography.Text>Phone: {data.phone}</Typography.Text>
-              <NovuProvider
-                subscriberId={data.subscriberId}
-                applicationIdentifier={"j4EdzFA6NpYc"}
-                initialFetchingStrategy={{
-                  fetchNotifications: true,
-                  fetchOrganization: true,
-                  fetchUnseenCount: true,
-                  fetchUserPreferences: true,
-                }}
-              >
-                <UseNotifications />
-              </NovuProvider>
-            </Space.Compact>
-          ))}
+          <Card style={{ height: 650 }}>
+            <Typography.Title
+              style={{ textAlign: "center", marginTop: 0 }}
+              level={2}
+            >
+              Subscriber
+            </Typography.Title>
+
+            {Object.values(dataSub).map((data) => (
+              <Space.Compact key={data._id} direction="vertical">
+                <NovuProvider
+                  subscriberId={data.subscriberId}
+                  applicationIdentifier={APPLICATION_ID}
+                  //   styles={styles}
+                  initialFetchingStrategy={{
+                    fetchNotifications: true,
+                    fetchUserPreferences: true,
+                  }}
+                >
+                  <PopoverNotificationCenter colorScheme={"light"}>
+                    {({ unseenCount }) => (
+                      <NotificationBell unseenCount={unseenCount} />
+                    )}
+                  </PopoverNotificationCenter>
+                </NovuProvider>
+                <Typography.Text>
+                  Subscriber ID: {data.subscriberId}
+                </Typography.Text>
+                <Typography.Text>First Name: {data.firstName}</Typography.Text>
+                <Typography.Text>Last Name: {data.lastName}</Typography.Text>
+                <Typography.Text>Email: {data.email}</Typography.Text>
+                <Typography.Text>Phone: {data.phone}</Typography.Text>
+                <NovuProvider
+                  subscriberId={data.subscriberId}
+                  applicationIdentifier={APPLICATION_ID}
+                  initialFetchingStrategy={{
+                    fetchNotifications: true,
+                    fetchOrganization: true,
+                    fetchUnseenCount: true,
+                    fetchUserPreferences: true,
+                  }}
+                >
+                  <UseNotifications />
+                </NovuProvider>
+              </Space.Compact>
+            ))}
+          </Card>
         </Col>
+      ) : (
+        <Empty />
       )}
     </Row>
   );

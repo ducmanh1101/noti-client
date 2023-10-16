@@ -1,6 +1,7 @@
 import { Card, Space, Tag, Typography } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 import { AddSubscriber } from "./addSubscriber";
 import { DetailTopic } from "./detailTopic";
 

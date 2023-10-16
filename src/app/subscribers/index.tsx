@@ -17,6 +17,7 @@ export const Subscribers = () => {
   useEffect(() => {
     (async () => {
       const deviceTokens: any = await getDeviceToken();
+      console.log(deviceTokens);
       setDeviceToken(deviceTokens);
     })();
   }, []);

@@ -1,9 +1,10 @@
-import { useSDK } from "@metamask/sdk-react";
-import { Button, Col, Row } from "antd";
 import { useEffect, useState } from "react";
-import { getDeviceToken } from "../push";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSDK } from "@metamask/sdk-react";
+import axios from "axios";
+import { Button, Col, Row } from "antd";
+
+import { getDeviceToken } from "../push";
 
 export const MetaMask = () => {
   const [account, setAccount] = useState<string>();

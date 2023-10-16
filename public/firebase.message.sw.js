@@ -12,8 +12,8 @@ const firebaseConfig = {
   projectId: "desig-6034e",
   storageBucket: "desig-6034e.appspot.com",
   messagingSenderId: "377775905449",
-  appId: "1:377775905449:web:ec6b50824e5270d860a7b8",
-  measurementId: "G-8Z1Z7FD7GH",
+  appId: "1:377775905449:web:89828aae0b5638a360a7b8",
+  measurementId: "G-BVRJNF6SWY",
 };
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker

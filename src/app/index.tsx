@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
-import React from "react";
-import { Topics } from "./topics";
 import { Route, Routes } from "react-router-dom";
+
+import { Topics } from "./topics";
 import { MetaMask } from "./connectWallet";
 
 export const App = () => {

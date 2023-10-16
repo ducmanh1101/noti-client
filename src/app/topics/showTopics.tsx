@@ -12,11 +12,11 @@ export interface TopicType {
 
 export const ShowTopics = () => {
   const [dataTopic, setDataTopic] = useState<TopicType[]>([]);
-
+  const urlServer = process.env.REACT_APP_URL_BACKEND;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/topics`);
+        const response = await axios.get(`${urlServer}/topics`);
         setDataTopic(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -24,7 +24,7 @@ export const ShowTopics = () => {
     };
 
     fetchData();
-  }, [dataTopic]);
+  }, [dataTopic, urlServer]);
 
   return (
     <Space size="large" wrap>

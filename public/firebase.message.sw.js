@@ -7,13 +7,13 @@ importScripts(
   "https://www.gstatic.com/firebasejs/10.4.0/firebase-messaging-compat.js"
 );
 const firebaseConfig = {
-  apiKey: "AIzaSyCucFTNq-u6rKBs1pdFa8BbwLu9TJMszIk",
-  authDomain: "desig-6034e.firebaseapp.com",
-  projectId: "desig-6034e",
-  storageBucket: "desig-6034e.appspot.com",
-  messagingSenderId: "377775905449",
-  appId: "1:377775905449:web:ec6b50824e5270d860a7b8",
-  measurementId: "G-8Z1Z7FD7GH",
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
+  measurementId: process.env.REACT_APP_measurementId,
 };
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
@@ -31,7 +31,6 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function (payload) {
-  console.log("Received background message ", payload);
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,

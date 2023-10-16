@@ -10,6 +10,7 @@ export const MetaMask = () => {
   const { sdk, connected, chainId } = useSDK();
   const [deviceToken, setDeviceToken] = useState("");
   const navigate = useNavigate();
+  const urlServer = process.env.REACT_APP_URL_BACKEND;
 
   useEffect(() => {
     (async () => {
@@ -23,16 +24,13 @@ export const MetaMask = () => {
       const accounts: any = await sdk?.connect();
       setAccount(accounts?.[0]);
 
-      await axios.post(`http://localhost:3001/subscribers`, {
+      await axios.post(`${urlServer}/subscribers`, {
         subscriberId: `${accounts?.[0]}`,
       });
 
-      await axios.put(
-        `http://localhost:3001/subscribers/fcm/${accounts?.[0]}`,
-        {
-          deviceTokens: [deviceToken],
-        }
-      );
+      await axios.put(`${urlServer}/subscribers/fcm/${accounts?.[0]}`, {
+        deviceTokens: [deviceToken],
+      });
       sessionStorage.setItem("Subscriber_ID", accounts?.[0]);
       return navigate("/");
     } catch (err) {
@@ -45,15 +43,6 @@ export const MetaMask = () => {
       <Col>
         <Button onClick={connect}>Connect metamask wallet</Button>
       </Col>
-      {/* {connected && (
-        <div>
-          <>
-            {chainId && `Connected chain: ${chainId}`}
-            <p></p>
-            {account && `Connected account: ${account}`}
-          </>
-        </div>
-      )} */}
     </Row>
   );
 };

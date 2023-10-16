@@ -11,11 +11,12 @@ type AddSubToTopicProps = {
 export const AddSubscriber = ({ topicKey }: AddSubToTopicProps) => {
   const [isFollow, setIsFollow] = useState(false);
   const currentSubscriberId = sessionStorage.getItem("Subscriber_ID");
+  const urlServer = process.env.REACT_APP_URL_BACKEND;
 
   const handle = useCallback(async () => {
     try {
       const response = await axios.get<TopicType>(
-        `http://localhost:3001/topics/${topicKey}`
+        `${urlServer}/topics/${topicKey}`
       );
       const topic: TopicType = response.data;
       const subs: [] = topic.subscribers;
@@ -25,13 +26,13 @@ export const AddSubscriber = ({ topicKey }: AddSubToTopicProps) => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [currentSubscriberId, topicKey]);
+  }, [currentSubscriberId, topicKey, urlServer]);
 
   async function handleAddSubscriber() {
     try {
       const options = {
         method: "POST",
-        url: `http://localhost:3001/topics/add/${topicKey}`,
+        url: `${urlServer}/topics/add/${topicKey}`,
         data: {
           subscribers: currentSubscriberId,
         },
@@ -54,30 +55,6 @@ export const AddSubscriber = ({ topicKey }: AddSubToTopicProps) => {
       >
         {isFollow ? "FOLLOWING" : "FOLLOW"}
       </Button>
-
-      {/* <Modal
-        open={isModalOpen}
-        onOk={() => setIsModalOpen(false)}
-        onCancel={() => setIsModalOpen(false)}
-      >
-        <Space direction="vertical">
-          {Object.values(listSubscriber).map((data) => (
-            <Row key={data._id} gutter={[8, 8]}>
-              <Col span={22}>
-                <Typography.Text>{data.subscriberId}</Typography.Text>
-              </Col>
-              <Col span={2}>
-                <Button
-                  onClick={() => handleAddSubscriber(data.subscriberId)}
-                  type="primary"
-                >
-                  Add to topic
-                </Button>
-              </Col>
-            </Row>
-          ))}
-        </Space>
-      </Modal> */}
     </>
   );
 };

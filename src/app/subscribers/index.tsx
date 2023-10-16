@@ -13,17 +13,19 @@ export const Subscribers = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [deviceToken, setDeviceToken] = useState("");
+  const urlServer = process.env.REACT_APP_URL_BACKEND;
 
   useEffect(() => {
     (async () => {
       const deviceTokens: any = await getDeviceToken();
+      console.log(deviceTokens);
       setDeviceToken(deviceTokens);
     })();
   }, []);
 
   const handleRegister = async () => {
     try {
-      await axios.post(`http://localhost:3001/subscribers`, {
+      await axios.post(`${urlServer}/subscribers`, {
         subscriberId: subscriberId,
         firstName: firstName,
         lastName: lastName,
@@ -31,7 +33,7 @@ export const Subscribers = () => {
         phone: phone,
       });
 
-      await axios.put(`http://localhost:3001/subscribers/fcm/${subscriberId}`, {
+      await axios.put(`${urlServer}/subscribers/fcm/${subscriberId}`, {
         deviceTokens: [deviceToken],
       });
       sessionStorage.setItem("Subscriber_ID", subscriberId);

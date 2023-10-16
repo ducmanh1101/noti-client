@@ -9,11 +9,10 @@ import {
 
 import { ShowTopics } from "./showTopics";
 
-import { APPLICATION_ID } from "../../constants";
-
 export const Topics = () => {
   const navigate = useNavigate();
   const [name, setName] = useState<any>("");
+  const AppId: any = process.env.REACT_APP_APPLICATION_ID;
 
   const handleDisconnect = () => {
     sessionStorage.clear();
@@ -34,7 +33,7 @@ export const Topics = () => {
         <Space size="large">
           <NovuProvider
             subscriberId={name}
-            applicationIdentifier={APPLICATION_ID}
+            applicationIdentifier={AppId}
             initialFetchingStrategy={{
               fetchNotifications: true,
               fetchUserPreferences: true,

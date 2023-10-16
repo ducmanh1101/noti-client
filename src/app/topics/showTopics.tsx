@@ -37,7 +37,7 @@ export const ShowTopics = () => {
               <img
                 style={{}}
                 alt="example"
-                src="https://firstsiteguide.com/wp-content/uploads/2021/10/best-crypto-blogs.png"
+                src="https://miro.medium.com/v2/resize:fit:1024/format:webp/1*z4yZG8-fyV20VItjpNHyLw.jpeg"
               />
             }
             actions={[
@@ -62,44 +62,5 @@ export const ShowTopics = () => {
           </Card>
         ))}
     </Space>
-    // <Row>
-    //   <Col>
-    //     <Table dataSource={dataTopic}>
-    //       <Column title="Topic name" dataIndex="name" key="name" />
-    //       <Column
-    //         title="Subscribers"
-    //         dataIndex="subscribers"
-    //         key="subscribers"
-    //         render={(subscribers: string[]) => (
-    //           <Space>
-    //             {subscribers.map((sub) => (
-    //               <Tag key={sub}>{sub}</Tag>
-    //             ))}
-    //           </Space>
-    //         )}
-    //       />
-    //       <Column
-    //         title="Action"
-    //         key="key"
-    //         dataIndex="key"
-    //         render={(key: string) => (
-    //           <Space key={key} size="middle">
-    //             <AddSubscriber topicKey={key} />
-
-    //             <RemoveSubscriber topicKey={key} />
-
-    //             <Button
-    //               onClick={() => handleDeleteTopic(key)}
-    //               type="primary"
-    //               danger
-    //             >
-    //               Delete
-    //             </Button>
-    //           </Space>
-    //         )}
-    //       />
-    //     </Table>
-    //   </Col>
-    // </Row>
   );
 };

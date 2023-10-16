@@ -7,7 +7,6 @@ import {
   PopoverNotificationCenter,
 } from "@novu/notification-center";
 
-import { CreateTopics } from "./createTopics";
 import { ShowTopics } from "./showTopics";
 
 import { APPLICATION_ID } from "../../constants";
@@ -56,7 +55,6 @@ export const Topics = () => {
           style={{ textAlign: "center", backgroundColor: "#d4f0fc" }}
           bodyStyle={{ width: "auto" }}
         >
-          <CreateTopics />
           <ShowTopics />
         </Card>
       </Col>

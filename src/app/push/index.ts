@@ -9,7 +9,7 @@ export const getDeviceToken = async () => {
     const messaging = getMessaging(initializeApp(firebaseConfig));
     const deviceToken = await getToken(messaging, {
       vapidKey:
-        "BEZcQJ9SJXvyJsEudUoQ6Un6JAay37bJJbTAfeSGXErN2xPGJPyLfzP8SgymNvDaqrvN94aFc4TIKvdILpE4xIg",
+        "BBKxJZRRYndX-cfcZhPMO25T0MpslNC4Ndwsy5wUx3tjYMIhqNoqQo8cAo8DsHgKC1VP2x6eXwzJ8bzVYtVOpPA",
     });
     return deviceToken;
   } catch (error: any) {

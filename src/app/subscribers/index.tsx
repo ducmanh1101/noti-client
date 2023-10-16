@@ -17,14 +17,12 @@ export const Subscribers = () => {
   useEffect(() => {
     (async () => {
       const deviceTokens: any = await getDeviceToken();
-      console.log(deviceTokens);
       setDeviceToken(deviceTokens);
     })();
   }, []);
 
   const handleRegister = async () => {
     try {
-      console.log(subscriberId);
       await axios.post(`http://localhost:3001/subscribers`, {
         subscriberId: subscriberId,
         firstName: firstName,
@@ -33,10 +31,9 @@ export const Subscribers = () => {
         phone: phone,
       });
 
-      await axios.put(`http://localhost:3001/subscribers/${subscriberId}`, {
+      await axios.put(`http://localhost:3001/subscribers/fcm/${subscriberId}`, {
         deviceTokens: [deviceToken],
       });
-      console.log(deviceToken);
       sessionStorage.setItem("Subscriber_ID", subscriberId);
       if (subscriberId) return navigate("/");
     } catch (error) {

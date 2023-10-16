@@ -27,9 +27,12 @@ export const MetaMask = () => {
         subscriberId: `${accounts?.[0]}`,
       });
 
-      await axios.put(`http://localhost:3001/subscribers/${accounts?.[0]}`, {
-        deviceTokens: [deviceToken],
-      });
+      await axios.put(
+        `http://localhost:3001/subscribers/fcm/${accounts?.[0]}`,
+        {
+          deviceTokens: [deviceToken],
+        }
+      );
       sessionStorage.setItem("Subscriber_ID", accounts?.[0]);
       return navigate("/");
     } catch (err) {

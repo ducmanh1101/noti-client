@@ -6,8 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const MetaMask = () => {
-  const [account, setAccount] = useState<string>();
-  const { sdk, connected, chainId } = useSDK();
+  const { sdk } = useSDK();
   const [deviceToken, setDeviceToken] = useState("");
   const navigate = useNavigate();
   const urlServer = process.env.REACT_APP_URL_BACKEND;
@@ -22,7 +21,6 @@ export const MetaMask = () => {
   const connect = async () => {
     try {
       const accounts: any = await sdk?.connect();
-      setAccount(accounts?.[0]);
 
       await axios.post(`${urlServer}/subscribers`, {
         subscriberId: `${accounts?.[0]}`,

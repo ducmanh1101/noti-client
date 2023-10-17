@@ -16,7 +16,7 @@ export const Topics = () => {
 
   const handleDisconnect = () => {
     sessionStorage.clear();
-    return navigate("/register");
+    return navigate("/");
   };
 
   useEffect(() => {

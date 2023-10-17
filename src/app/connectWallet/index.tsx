@@ -30,7 +30,7 @@ export const MetaMask = () => {
         deviceTokens: [deviceToken],
       });
       sessionStorage.setItem("Subscriber_ID", accounts?.[0]);
-      return navigate("/");
+      return navigate("/home");
     } catch (err) {
       console.warn(`failed to connect..`, err);
     }

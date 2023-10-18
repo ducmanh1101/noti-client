@@ -37,6 +37,7 @@ export const Subscribers = () => {
         deviceTokens: [deviceToken],
       });
       sessionStorage.setItem("Subscriber_ID", subscriberId);
+      console.log(deviceToken);
       if (subscriberId) return navigate("/");
     } catch (error) {
       console.log(error);

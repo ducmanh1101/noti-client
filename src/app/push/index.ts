@@ -2,26 +2,27 @@ import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 
 export const getDeviceToken = async () => {
-  const firebaseConfig = {
-    apiKey: process.env.REACT_APP_apiKey,
-    authDomain: process.env.REACT_APP_authDomain,
-    projectId: process.env.REACT_APP_projectId,
-    storageBucket: process.env.REACT_APP_storageBucket,
-    messagingSenderId: process.env.REACT_APP_messagingSenderId,
-    appId: process.env.REACT_APP_appId,
-    measurementId: process.env.REACT_APP_measurementId,
-  };
-  const validKey = process.env.REACT_APP_VAPID_KEY;
-
   try {
+    const firebaseConfig = {
+      apiKey: "AIzaSyCucFTNq-u6rKBs1pdFa8BbwLu9TJMszIk",
+      authDomain: "desig-6034e.firebaseapp.com",
+      projectId: "desig-6034e",
+      storageBucket: "desig-6034e.appspot.com",
+      messagingSenderId: "377775905449",
+      appId: "1:377775905449:web:89828aae0b5638a360a7b8",
+      measurementId: "G-BVRJNF6SWY",
+    };
+
     const permission = await Notification.requestPermission();
     if (permission !== "granted") throw new Error("permission denied!");
     const messaging = getMessaging(initializeApp(firebaseConfig));
     const deviceToken = await getToken(messaging, {
-      vapidKey: validKey,
+      vapidKey:
+        "BOoVFkMylGaLMQyAP0NNgC5SLTu7Q-9UsMN07oTc-MM0G4heXHx_WQntePm4zKy7hPzEmL_X-ZI-DLlrnCWIMPM",
     });
+
     return deviceToken;
   } catch (error: any) {
-    console.log(error);
+    console.log("error", error);
   }
 };

@@ -25,7 +25,7 @@ export const MetaMask = () => {
       await axios.post(`${urlServer}/subscribers`, {
         subscriberId: `${accounts?.[0]}`,
       });
-
+      console.log("device token: ", deviceToken);
       await axios.put(`${urlServer}/subscribers/fcm/${accounts?.[0]}`, {
         deviceTokens: [deviceToken],
       });

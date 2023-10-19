@@ -24,7 +24,7 @@ export const ShowTopics = () => {
     };
 
     fetchData();
-  }, [dataTopic, urlServer]);
+  }, [urlServer]);
 
   return (
     <Space size="large" wrap>

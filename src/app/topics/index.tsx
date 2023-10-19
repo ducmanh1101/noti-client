@@ -22,7 +22,7 @@ export const Topics = () => {
   useEffect(() => {
     const nameSession = sessionStorage.getItem("Subscriber_ID");
     setName(nameSession);
-  }, [name]);
+  }, []);
 
   return (
     <Row gutter={[8, 8]} justify="center" align="middle">
